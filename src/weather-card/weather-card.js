@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 export const WeatherCard = (props) => {
     const weather = props.weather;
-    console.log(weather);
     return (
         <div className="weather-card">
             <div className="weather-card__main">
