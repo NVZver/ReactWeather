@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import {WeatherCard} from './weather-card'
 
 const WEATHER_SERSVICE = 'https://api.openweathermap.org';
@@ -10,19 +12,19 @@ export class WeatherCardContainer extends Component {
     constructor(props){
         super(props);
         this.state = {
-            weather: {}
+            data: {}
         };
         this.setWeather();
     }
 
     async setWeather(){
-        const weather = await this.getWeather({
+        const data = await this.getWeather({
             city: 'London',
-            units: 'imperal',
+            units: 'metric',
             forecast: false
         });
 
-        this.setState({weather});
+        this.setState({ data });
     }
 
     // opts: { city: string, units: 'metric' | 'imperial', forecast?: boolean }
@@ -34,7 +36,23 @@ export class WeatherCardContainer extends Component {
         return await res.json();
     }
 
+    renderProgress(){
+        
+    }
+
+    renderHandler(){
+        if(this.state.data.coord){
+            return <WeatherCard data={this.state.data} />
+        }
+
+        return <CircularProgress />;
+    }
+
     render(){
-        return <WeatherCard weather={this.state.weather} />
+        return (
+            <div className="weather-card-container">
+                {this.renderHandler()}
+            </div>
+        );
     }
 }
