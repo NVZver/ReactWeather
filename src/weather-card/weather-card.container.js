@@ -6,7 +6,7 @@ import {WeatherCard} from './weather-card'
 const WEATHER_SERSVICE = 'https://api.openweathermap.org';
 const WEATHER_PATH__CURENT = '/data/2.5/weather';
 const WEATHER_PATH__FORECAST = '/data/2.5/forecast';
-const API_KEY = 'c7caadcd3ebaab58960c97dfdfdee362';
+const API_KEY = '23c5ab55c54de497b666b4190241983b';
 
 export class WeatherCardContainer extends Component {
     constructor(props){
@@ -19,11 +19,11 @@ export class WeatherCardContainer extends Component {
 
     async setWeather(){
         const data = await this.getWeather({
-            city: 'London',
+            city: 'Amsterdam',
             units: 'metric',
             forecast: false
         });
-
+        console.log('error: ', data);
         this.setState({ data });
     }
 
@@ -32,7 +32,7 @@ export class WeatherCardContainer extends Component {
         const method = 'GET';
         const urlOptions = `?q=${opts.city}&units=${opts.units}&APPID=${API_KEY}`;
         const url = `${WEATHER_SERSVICE}${opts.forecast ? WEATHER_PATH__FORECAST : WEATHER_PATH__CURENT}${urlOptions}`;
-        const res = await fetch(url).catch(err => err);
+        const res = await fetch(url);
         return await res.json();
     }
 
